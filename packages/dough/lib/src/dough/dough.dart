@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:vector_math/vector_math_64.dart' as vmath;
 
 import 'dough_controller.dart';
-import 'dough_recipe.dart';
 import 'dough_transformer.dart';
+import 'recipe.dart';
 
 /// Squishes the provided [child] widget based on the provided
 /// [controller] widget in a dough-like fashion.
@@ -32,7 +32,7 @@ class Dough extends StatefulWidget {
   final DoughTransformer? transformer;
 
   /// The axis on which to constrain any stretching. If no axis is specified,
-  /// the [Dough] will not be constrained to any access.
+  /// the [Dough] will not be constrained to any axis.
   ///
   /// **Note that this feature is still under development.**
   final Axis? axis;

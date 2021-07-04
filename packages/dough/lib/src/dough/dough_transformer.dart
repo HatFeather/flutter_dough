@@ -7,7 +7,7 @@ import 'package:vector_math/vector_math_64.dart' as vmath;
 
 import 'dough.dart';
 import 'dough_controller.dart';
-import 'dough_recipe.dart';
+import 'recipe_data.dart';
 
 /// A context passed to a [DoughTransformer]. This will contain a context
 /// to inform the [DoughTransformer] on how to transform a widget.
@@ -129,6 +129,7 @@ class DoughTransformations {
       vmath.Vector4(0, 0, 0, 1),
     );
 
+    // ignore: avoid_dynamic_calls
     return rotateAway * skew * rotateTowards;
   }
 
@@ -138,6 +139,7 @@ class DoughTransformations {
   ///
   /// You can basically think of this as the core squish behavior.
   static Matrix4 squishDeformation(DoughTransformerContext context) {
+    // ignore: avoid_dynamic_calls
     return perspectiveWarp(context) *
         viscositySkew(context) *
         expansion(context);

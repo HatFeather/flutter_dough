@@ -5,7 +5,7 @@ import 'package:sensors/sensors.dart';
 
 import 'dough.dart';
 import 'dough_controller.dart';
-import 'dough_recipe.dart';
+import 'recipe.dart';
 
 /// A widget that stretches its child in a dough-like fashion based
 /// on physical device accelerometer inputs (e.g. the [Dough] jiggles
@@ -14,7 +14,7 @@ import 'dough_recipe.dart';
 /// **This widget ONLY works on devices that have accelerometers.**
 /// 
 /// Please note that this widget will be moved over to a separate package
-/// to remove a platform depedency.
+/// to remove a platform dependency.
 class GyroDough extends StatefulWidget {
   /// Creates a [GyroDough] widget.
   const GyroDough({
