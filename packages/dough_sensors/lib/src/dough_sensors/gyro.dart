@@ -1,10 +1,9 @@
 import 'dart:async';
 
+import 'package:dough/dough.dart';
 import 'package:flutter/material.dart';
 import 'package:sensors/sensors.dart';
 
-import 'dough.dart';
-import 'dough_controller.dart';
 import 'recipe.dart';
 
 /// A widget that stretches its child in a dough-like fashion based
@@ -12,9 +11,6 @@ import 'recipe.dart';
 /// when you move your phone around).
 ///
 /// **This widget ONLY works on devices that have accelerometers.**
-/// 
-/// Please note that this widget will be moved over to a separate package
-/// to remove a platform dependency.
 class GyroDough extends StatefulWidget {
   /// Creates a [GyroDough] widget.
   const GyroDough({
@@ -60,7 +56,7 @@ class _GyroDoughState extends State<GyroDough> {
 
   @override
   void didChangeDependencies() {
-    final prefs = DoughRecipe.watch(context).gyroPrefs;
+    final prefs = DoughSensorsRecipe.watch(context).gyroRecipe;
 
     if (!_hasInitialized) {
       _rollingSum = Offset.zero;
@@ -102,7 +98,7 @@ class _GyroDoughState extends State<GyroDough> {
   }
 
   void _onAccelEvent(AccelerometerEvent event) {
-    final prefs = DoughRecipe.read(context).gyroPrefs;
+    final prefs = DoughSensorsRecipe.read(context).gyroRecipe;
     final sample = Offset(-event.x, event.y) * prefs.gyroMultiplier;
 
     _rollingIndex = (_rollingIndex + 1) % _rollingSamples.length;

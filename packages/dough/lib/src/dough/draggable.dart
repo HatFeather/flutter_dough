@@ -17,7 +17,7 @@ class DraggableDough<T extends Object> extends StatefulWidget {
   /// Creates a [DraggableDough] widget.
   const DraggableDough({
     Key? key,
-    this.prefs,
+    this.recipe,
     this.onDoughBreak,
     required this.child,
     required this.feedback,
@@ -40,10 +40,10 @@ class DraggableDough<T extends Object> extends StatefulWidget {
   /// Preferences for the behavior of this [DraggableDough] widget. This can
   /// be specified here or in the context of a [DoughRecipe] widget. This will
   /// override the contextual [DoughRecipeData().draggablePrefs] if provided.
-  final DraggableDoughPrefs? prefs;
+  final DraggableDoughRecipeData? recipe;
 
   /// A callback raised when the user drags the feedback widget beyond the
-  /// [DraggableDoughPrefs.breakDistance] and the [Dough] snaps back into
+  /// [DraggableDoughRecipeData.breakDistance] and the [Dough] snaps back into
   /// its original form.
   final VoidCallback? onDoughBreak;
 
@@ -127,7 +127,7 @@ class _DraggableDoughState<T extends Object> extends State<DraggableDough<T>> {
   @override
   Widget build(BuildContext context) {
     final recipe = DoughRecipe.watch(context);
-    final prefs = widget.prefs ?? recipe.draggablePrefs;
+    final draggableRecipe = widget.recipe ?? recipe.draggableRecipe;
 
     // The feedback widget won't share the same context once the [Draggable]
     // widget instantiates it as an overlay. The [DoughRecipe] has to be copied
@@ -139,6 +139,7 @@ class _DraggableDoughState<T extends Object> extends State<DraggableDough<T>> {
         child: widget.feedback,
       ),
     );
+
     Widget draggable;
     if (widget.longPress) {
       draggable = LongPressDraggable<T>(
@@ -191,11 +192,12 @@ class _DraggableDoughState<T extends Object> extends State<DraggableDough<T>> {
 
         final controller = _controllerTracker.getcontroller(event.pointer);
         if (controller.isActive) {
-          final sqrBreakThresh = prefs.breakDistance * prefs.breakDistance;
+          final sqrBreakThresh =
+              draggableRecipe.breakDistance * draggableRecipe.breakDistance;
           if (controller.delta.distanceSquared > sqrBreakThresh) {
             controller.stop();
             widget.onDoughBreak?.call();
-            if (prefs.useHapticsOnBreak) {
+            if (draggableRecipe.useHapticsOnBreak) {
               HapticFeedback.selectionClick();
             }
           } else {

@@ -1,32 +1,18 @@
+import 'package:dough/dough.dart';
 import 'package:equatable/equatable.dart';
 
-import 'dough.dart';
 import 'gyro.dart';
 
 /// Preferences applied to [GyroDough] widgets.
 /// 
 /// Please note that this widget will be moved over to a separate package
 /// to remove a platform depedency.
-class GyroDoughPrefs extends Equatable {
+class GyroDoughRecipeData extends Equatable {
   /// Creates raw [GyroDough] preferences, all values must be specified.
-  const GyroDoughPrefs.raw({
-    required this.sampleCount,
-    required this.gyroMultiplier,
+  const GyroDoughRecipeData({
+    this.sampleCount = 10,
+    this.gyroMultiplier = 100,
   });
-
-  /// Creates [GyroDough] preferences.
-  factory GyroDoughPrefs({
-    int? sampleCount,
-    double? gyroMultiplier,
-  }) {
-    return GyroDoughPrefs.raw(
-      sampleCount: sampleCount ?? 10,
-      gyroMultiplier: gyroMultiplier ?? 100,
-    );
-  }
-
-  /// Creates fallback [GyroDough] preferences.
-  factory GyroDoughPrefs.fallback() => GyroDoughPrefs();
 
   /// The number of samples to use in the final gyro output. In technical
   /// terms, this value controls the intensity of 'low-pass filter' applied
@@ -47,11 +33,11 @@ class GyroDoughPrefs extends Equatable {
   final double gyroMultiplier;
 
   /// Copies these preferences with some new values.
-  GyroDoughPrefs copyWith({
+  GyroDoughRecipeData copyWith({
     int? sampleCount,
     double? gyroMultiplier,
   }) {
-    return GyroDoughPrefs.raw(
+    return GyroDoughRecipeData(
       sampleCount: sampleCount ?? this.sampleCount,
       gyroMultiplier: gyroMultiplier ?? this.gyroMultiplier,
     );
@@ -62,7 +48,4 @@ class GyroDoughPrefs extends Equatable {
         sampleCount,
         gyroMultiplier,
       ];
-
-  @override
-  bool get stringify => true;
 }

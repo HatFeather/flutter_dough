@@ -5,59 +5,23 @@ import 'dough.dart';
 import 'dough_controller.dart';
 import 'draggable.dart';
 import 'draggable_recipe.dart';
-import 'gyro.dart';
-import 'gyro_recipe.dart';
 
 /// Settings which will be applied to the [Dough] widget at runtime.
 @immutable
 class DoughRecipeData extends Equatable {
   /// Creates a raw recipe, all values must be specified.
-  const DoughRecipeData.raw({
-    required this.viscosity,
-    required this.adhesion,
-    required this.expansion,
-    required this.usePerspectiveWarp,
-    required this.perspectiveWarpDepth,
-    required this.entryDuration,
-    required this.entryCurve,
-    required this.exitDuration,
-    required this.exitCurve,
-    required this.draggablePrefs,
-    required this.gyroPrefs,
+  const DoughRecipeData({
+    this.viscosity = 7000,
+    this.adhesion = 12,
+    this.expansion = 1,
+    this.usePerspectiveWarp = false,
+    this.perspectiveWarpDepth = 0.015,
+    this.entryDuration = const Duration(milliseconds: 20),
+    this.entryCurve = Curves.easeInOut,
+    this.exitDuration = const Duration(milliseconds: 500),
+    this.exitCurve = Curves.elasticIn,
+    this.draggableRecipe = const DraggableDoughRecipeData(),
   });
-
-  /// Creates a recipe. Defaults are implied for any values not
-  /// specified.
-  factory DoughRecipeData({
-    double? viscosity,
-    double? adhesion,
-    double? expansion,
-    bool? usePerspectiveWarp,
-    double? perspectiveWarpDepth,
-    Duration? entryDuration,
-    Curve? entryCurve,
-    Duration? exitDuration,
-    Curve? exitCurve,
-    DraggableDoughPrefs? draggablePrefs,
-    GyroDoughPrefs? gyroPrefs,
-  }) {
-    return DoughRecipeData.raw(
-      viscosity: viscosity ?? 7000,
-      adhesion: adhesion ?? 12,
-      expansion: expansion ?? 1,
-      usePerspectiveWarp: usePerspectiveWarp ?? false,
-      perspectiveWarpDepth: perspectiveWarpDepth ?? 0.015,
-      entryDuration: entryDuration ?? const Duration(milliseconds: 20),
-      entryCurve: entryCurve ?? Curves.easeInOut,
-      exitDuration: exitDuration ?? const Duration(milliseconds: 500),
-      exitCurve: exitCurve ?? Curves.elasticIn,
-      draggablePrefs: draggablePrefs ?? DraggableDoughPrefs.fallback(),
-      gyroPrefs: gyroPrefs ?? GyroDoughPrefs.fallback(),
-    );
-  }
-
-  /// Creates the fallback recipe.
-  factory DoughRecipeData.fallback() => DoughRecipeData();
 
   /// How 'thick' a [Dough] widget is. Higher values make for harder/less
   /// elastic [Dough]. A typical value would be something like 7000. Lower
@@ -95,10 +59,7 @@ class DoughRecipeData extends Equatable {
   final Curve exitCurve;
 
   /// Default settings applied to [DraggableDough] widgets.
-  final DraggableDoughPrefs draggablePrefs;
-
-  /// Default settings applied to [GyroDough] widgets.
-  final GyroDoughPrefs gyroPrefs;
+  final DraggableDoughRecipeData draggableRecipe;
 
   /// Copies the current recipe with some new values.
   DoughRecipeData copyWith({
@@ -111,10 +72,9 @@ class DoughRecipeData extends Equatable {
     Curve? entryCurve,
     Duration? exitDuration,
     Curve? exitCurve,
-    DraggableDoughPrefs? draggablePrefs,
-    GyroDoughPrefs? gyroPrefs,
+    DraggableDoughRecipeData? draggableRecipe,
   }) {
-    return DoughRecipeData.raw(
+    return DoughRecipeData(
       viscosity: viscosity ?? this.viscosity,
       adhesion: adhesion ?? this.adhesion,
       expansion: expansion ?? this.expansion,
@@ -124,8 +84,7 @@ class DoughRecipeData extends Equatable {
       entryCurve: entryCurve ?? this.entryCurve,
       exitDuration: exitDuration ?? this.exitDuration,
       exitCurve: exitCurve ?? this.exitCurve,
-      draggablePrefs: draggablePrefs ?? this.draggablePrefs,
-      gyroPrefs: gyroPrefs ?? this.gyroPrefs,
+      draggableRecipe: draggableRecipe ?? this.draggableRecipe,
     );
   }
 
@@ -140,10 +99,6 @@ class DoughRecipeData extends Equatable {
         entryCurve,
         exitDuration,
         exitCurve,
-        draggablePrefs,
-        gyroPrefs,
+        draggableRecipe,
       ];
-
-  @override
-  bool get stringify => true;
 }

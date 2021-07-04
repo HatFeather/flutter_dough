@@ -1,4 +1,5 @@
 import 'package:dough/dough.dart';
+import 'package:dough_sensors/dough_sensors.dart';
 import 'package:flutter/material.dart';
 
 /// This page demonstrates how to use the [GyroDough] widget.

@@ -12,18 +12,15 @@ class DoughRecipe extends StatelessWidget {
   const DoughRecipe({
     Key? key,
     required this.child,
-    this.data,
+    this.data = const DoughRecipeData(),
   }) : super(key: key);
-
-  /// The fallback recipe.
-  static final DoughRecipeData _kFallbackRecipe = DoughRecipeData.fallback();
 
   /// This widget's child. Any [Dough] widget below this widget will inherit
   /// the [data] provided in this recipe.
   final Widget child;
 
   /// The settings to be applied to all [Dough] widgets below this widget.
-  final DoughRecipeData? data;
+  final DoughRecipeData data;
 
   /// Gets the inherited [DoughRecipeData]. If no recipe is found,
   /// a default one will be returned instead.
@@ -34,7 +31,7 @@ class DoughRecipe extends StatelessWidget {
     try {
       return Provider.of<DoughRecipeData>(context, listen: listen);
     } on ProviderNotFoundException catch (_) {
-      return _kFallbackRecipe;
+      return const DoughRecipeData();
     }
   }
 
@@ -53,7 +50,7 @@ class DoughRecipe extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Provider.value(
-      value: data ?? _kFallbackRecipe,
+      value: data,
       child: child,
     );
   }
